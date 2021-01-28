@@ -23,16 +23,21 @@ margin: 10px;
 
 
 
-function App(props) {
+function App({addAction, subtractAction, resetAction}) {
   return (
     <OuterDiv>
     <Number />
     <StyledDiv>
       <StyledButton onClick={() => {
-        
+        addAction()
       }} >add</StyledButton>
-      <StyledButton>subtract</StyledButton>
-      <StyledButton>reset</StyledButton>
+      <StyledButton onClick={() => {
+        subtractAction()
+      }} >subtract</StyledButton>
+      <StyledButton onClick={() => {
+        resetAction()
+      }} >reset</StyledButton>
+
     </StyledDiv>
     </OuterDiv>
   );
@@ -42,6 +47,14 @@ const mapStateToProps = state => {
   return {
     counter: state.counter
   }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addAction: () => dispatch({type: 'ADD', payload: 1 }), 
+    subtractAction: () => dispatch({type: 'SUBTRACT', payload: 1 }), 
+    resetAction: () => dispatch({type: 'RESET'}) 
+  }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
